@@ -47,5 +47,3 @@ EOS
     end
   end
 end
-
-

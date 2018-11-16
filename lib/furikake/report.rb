@@ -5,7 +5,7 @@ module Furikake
     include Furikake::Config
 
     def initialize
-      @resource = Furikake::Resource.new
+      @resource = Furikake::Resource.generate
       @params = read_furikake_yaml
     end
 
@@ -32,7 +32,7 @@ module Furikake
     def generate(header, footer)
       documents = <<"EOS"
 #{header}
-#{@resource.generate}
+#{@resource}
 #{footer}
 EOS
       documents

@@ -1,12 +1,9 @@
 module Furikake
   class Resource
-    def initialize
-    end
-    
-    def generate
+    def self.generate
       types = %w(
         ec2 alb clb lambda elasticsearch_service
-        kinesis rds directory_service vpc
+        kinesis rds directory_service vpc vpc_endpoint
       )
 
       documents = ""

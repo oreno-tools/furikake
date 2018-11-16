@@ -24,6 +24,9 @@ EOS
         ec2.describe_vpcs.vpcs.each do |v|
           vpc = []
           vpc << 'N/A' if v.tags.map(&:to_h).all? { |h| h[:key] != 'Name' }
+          v.tags.each do |tag|
+            vpc << tag.value if tag.key == 'Name'
+          end
           vpc << v.vpc_id
           vpc << v.cidr_block
           vpc << v.state
@@ -31,10 +34,7 @@ EOS
         end
         vpcs
       end
-
       module_function :report, :get_resources
     end
   end
 end
-
-
