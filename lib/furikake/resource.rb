@@ -6,7 +6,7 @@ module Furikake
     def generate
       types = %w(
         ec2 alb clb lambda elasticsearch_service
-        kinesis rds directory_service
+        kinesis rds directory_service vpc
       )
 
       documents = ""
