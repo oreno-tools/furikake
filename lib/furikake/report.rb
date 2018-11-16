@@ -32,9 +32,9 @@ module Furikake
     def generate(header, footer)
       documents = <<"EOS"
 #{header}
-#{published_by}
 #{@resource}
 #{footer}
+#{published_by}
 EOS
       documents
     end
