@@ -32,10 +32,15 @@ module Furikake
     def generate(header, footer)
       documents = <<"EOS"
 #{header}
+#{published_by}
 #{@resource}
 #{footer}
 EOS
       documents
+    end
+
+    def published_by
+      "Published #{Time.now} by furikake (https://github.com/inokappa/furikake)"
     end
   end
 end
