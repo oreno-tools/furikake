@@ -53,8 +53,11 @@ backlog:
 ### Run
 
 ```sh
-# 
+# ドキュメント化する情報を標準出力に出力する
 bundle exec furikake show
+
+# ドキュメント化する情報を wiki に登録する
+bundle exec furikake publish
 ```
 
 ## Tips
