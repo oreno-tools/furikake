@@ -1,16 +1,20 @@
 # Furikake
 
+![](https://raw.githubusercontent.com/inokappa/furikake/master/docs/images/furikake.png)
+
 ## これなに
 
-* 利用している AWS リソースを Backlog の Wiki ページ (Markdown フォーマットのみ) に良しなに纏めて登録してくれるコマンドラインツールです
+* 利用している AWS リソースを Backlog の Wiki ページ (Markdown フォーマットのみ) に良しなに纏めてドキュメント化してくれるコマンドラインツールです
 * 簡単なコードを追加することで, 取得する AWS リソースを増やすことが出来るようにはしています
 * Backlog Wiki 以外にも登録出来るようにはしています
 
 ## Install
 
-とりあえずは, `git clone` してきて `bundle install` する感じで.
+とりあえずは, `git clone` してきて `bundle install` する感じでお願い致します.
 
 ```sh
+$ git clone git@github.com:inokappa/furikake.git
+$ bundle install --path vendor/bundle
 ```
 
 ## Usage
@@ -21,7 +25,7 @@
 
 ### Write .envrc
 
-とりあえずは, direnv と組み合わせて利用することを想定している. AWS のクレデンシャル情報は .envrc に記載する.
+とりあえずは, direnv と組み合わせて利用することを想定しており, AWS のクレデンシャル情報は .envrc に記載して下さい.
 
 ```sh
 export AWS_PROFILE=your-profile
@@ -30,7 +34,7 @@ export AWS_REGION=ap-northeast-1
 
 ### Write .frikake.yml
 
-カレントディレクトリに, 以下のような内容で .furikake.yml を作成する.
+カレントディレクトリに, 以下のような内容で .furikake.yml を作成して下さい.
 
 ```yaml
 backlog:
@@ -52,6 +56,65 @@ backlog:
 # 
 bundle exec furikake show
 ```
+
+## Tips
+
+### リソース追加
+
+`lib/furikake/resources/` 以下に任意のファイル名でコードを追加することで, ドキュメント化する対象のリソースを追加することが出来ます.
+
+```ruby
+module Furikake
+  module Resources
+    module Clb
+      def report
+        resources = get_resources
+        headers = ['LB Name', 'DNS Name', 'Instances']
+        if resources.empty?
+          info = 'N/A'
+        else
+          info = MarkdownTables.make_table(headers, resources, is_rows: true, align: 'l')
+        end
+        documents = <<"EOS"
+### ELB (CLB)
+
+#{info}
+EOS
+        
+        documents
+      end
+
+      def get_resources
+        elb = Aws::ElasticLoadBalancing::Client.new
+        elbs = []
+        elb.describe_load_balancers.load_balancer_descriptions.each do |lb|
+          elb = []
+          elb << lb.load_balancer_name
+          elb << lb.dns_name
+          elb << (lb.instances.map(&:to_h).map {|a| a[:instance_id] }).join(',')
+          elbs << elb
+        end
+        elbs
+      end
+
+      module_function :report, :get_resources
+    end
+  end
+end
+```
+
+report メソッドには, リソースのヘッダ名を `headers` に配列で指定します. get_resources メソッドにドキュメント化したいリソースの一覧を取得する為の処理を追加します. 戻り値は, 以下のようなフォーマットになるように実装して下さい.
+
+```
+[['ID', 'Name', 'Status'], ['ID', 'Name', 'Status'], ['ID', 'Name', 'Status']]
+```
+
+## Todo
+
+* エラー処理
+* デーモン化
+* Backlog Wiki 以外の Wiki (例えば, Github Wiki や Gist 等)
+* テスト追加
 
 ## Development
 
