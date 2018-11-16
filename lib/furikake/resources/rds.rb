@@ -3,13 +3,14 @@ module Furikake
     module Rds
       def report
         instance, cluster = get_resources
-        headers = ['DB Cluster Name', 'Cluster Endpoint', 'Cluster Reader Endpoint', 'Cluster Members']
+        headers = ['DB Cluster Name', 'DB Instance Name', 'DB Instance Class', 'DB Engine', 'DB Endpoint']
         if instance.empty?
           rds_info = 'N/A'
         else
           rds_info = MarkdownTables.make_table(headers, instance, is_rows: true, align: 'l')
         end
 
+        headers = ['DB Cluster Name', 'Cluster Endpoint', 'Cluster Reader Endpoint', 'Cluster Members']
         if cluster.empty?
           cluster_info = 'N/A'
         else

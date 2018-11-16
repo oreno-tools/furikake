@@ -10,7 +10,7 @@ module Furikake
           info = MarkdownTables.make_table(headers, resources, is_rows: true, align: 'l')
         end
         documents = <<"EOS"
-### ELB (CLB)
+### Directory Service (Simple AD)
 
 #{info}
 EOS
