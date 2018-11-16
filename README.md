@@ -1,28 +1,57 @@
 # Furikake
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/furikake`. To experiment with that code, run `bin/console` for an interactive prompt.
+## これなに
 
-TODO: Delete this and the text above, and describe your gem
+* 利用している AWS リソースを Backlog の Wiki ページ (Markdown フォーマットのみ) に良しなに纏めて登録してくれるコマンドラインツールです
+* 簡単なコードを追加することで, 取得する AWS リソースを増やすことが出来るようにはしています
+* Backlog Wiki 以外にも登録出来るようにはしています
 
-## Installation
+## Install
 
-Add this line to your application's Gemfile:
+とりあえずは, `git clone` してきて `bundle install` する感じで.
 
-```ruby
-gem 'furikake'
+```sh
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install furikake
 
 ## Usage
 
-TODO: Write usage instructions here
+### Create Wiki Page
+
+* Backlog の wiki を作成し, wiki ID を控えておく (後の .furikake.yml で利用する)
+
+### Write .envrc
+
+とりあえずは, direnv と組み合わせて利用することを想定している. AWS のクレデンシャル情報は .envrc に記載する.
+
+```sh
+export AWS_PROFILE=your-profile
+export AWS_REGION=ap-northeast-1
+```
+
+### Write .frikake.yml
+
+カレントディレクトリに, 以下のような内容で .furikake.yml を作成する.
+
+```yaml
+backlog:
+  projects:
+    - space_id: 'your-backlog-space-id'
+      api_key: 'your-backlog-api-key'
+      top_level_domain: 'your-backlog-top-level-domain'
+      wiki_id: your-wiki-id
+      wiki_name: 'your-wiki-name'
+      header: >
+        # Test Header
+      footer: >
+        # Test Footer
+```
+
+### Run
+
+```sh
+# 
+bundle exec furikake show
+```
 
 ## Development
 

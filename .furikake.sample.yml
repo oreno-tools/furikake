@@ -1,0 +1,11 @@
+backlog:
+  projects:
+    - space_id: 'your-backlog-space-id'
+      api_key: 'your-backlog-api-key'
+      top_level_domain: 'your-backlog-top-level-domain'
+      wiki_id: your-wiki-id
+      wiki_name: 'your-wiki-name'
+      header: >
+        # Test Header
+      footer: >
+        # Test Footer
