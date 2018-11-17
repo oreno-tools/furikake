@@ -4,6 +4,7 @@ module Furikake
       types = %w(
         ec2 alb clb lambda elasticsearch_service
         kinesis rds directory_service vpc vpc_endpoint
+        security_group
       )
 
       documents = ""
