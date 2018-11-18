@@ -11,8 +11,8 @@ describe 'furikake check version' do
   end
 end
 
-describe 'furikake check subcommand help' do
-  it 'has Commands: by cli' do
+describe 'furikake check help' do
+  it 'output `Commands:` by cli' do
     output = capture(:stdout) { Furikake::CLI.start(%w{help}) }
     expect(output).to match(/Commands:/)
   end
@@ -22,3 +22,10 @@ describe 'furikake check subcommand help' do
     expect(output).to match(/Could not find command "aaaa"./)
   end
 end
+
+# describe 'furikake check setup' do
+#   it 'output Message by cli' do
+#     output = capture(:stdout) { Furikake::CLI.start(%w{setup}) }
+#     expect(output).to match(/[setup] .furikake.yml created./)
+#   end
+# end
