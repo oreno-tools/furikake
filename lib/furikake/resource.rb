@@ -1,7 +1,7 @@
 module Furikake
   class Resource
     def self.generate
-      documents = ""
+      documents = ''
       load_type.each do |type|
         require "furikake/resources/#{type}"
         eval "documents.concat(Furikake::Resources::#{type.camelize}.report)"
@@ -13,7 +13,7 @@ module Furikake
     def self.load_type
       type = []
       Dir.glob(File.dirname(__FILE__) + '/resources/*').each do |r|
-        type << File.basename(r, '.rb')
+        type << File.basename(r, '.rb') unless r.include?('stub')
       end
       type
     end

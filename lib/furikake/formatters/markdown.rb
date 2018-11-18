@@ -15,11 +15,12 @@ module Furikake
 <%- end -%>
 <%- if ! r[:resource].empty? -%>
 <%= MarkdownTables.make_table(r[:header], r[:resource], is_rows: true, align: 'l') %>
+
 <%- else -%>
 <%= 'N/A' %>
-<%- end -%>
-<%- end -%>
 
+<%- end -%>
+<%- end -%>
 EOS
         erb = ERB.new(contents, nil, '-')
         erb.result(binding).chomp

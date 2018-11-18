@@ -1,5 +1,4 @@
-# Furikake
-
+# Furikake [![Build Status](https://travis-ci.org/inokappa/furikake.svg?branch=master)](https://travis-ci.org/inokappa/furikake)
 ![](https://raw.githubusercontent.com/inokappa/furikake/master/docs/images/furikake.png)
 
 ## これなに

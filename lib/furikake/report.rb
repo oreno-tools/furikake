@@ -5,8 +5,8 @@ module Furikake
     include Furikake::Config
 
     def initialize
-      @resource = Furikake::Resource.generate
       @params = read_furikake_yaml
+      @resource = Furikake::Resource.generate
     end
 
     def show
