@@ -69,44 +69,34 @@ bundle exec furikake publish
 ```ruby
 module Furikake
   module Resources
-    module Clb
-      def report
-        resources = get_resources
-        headers = ['LB Name', 'DNS Name', 'Instances']
-        if resources.empty?
-          info = 'N/A'
-        else
-          info = MarkdownTables.make_table(headers, resources, is_rows: true, align: 'l')
-        end
-        documents = <<"EOS"
-### ELB (CLB)
-
-#{info}
-EOS
-        
-        documents
+    module Ec2
+      def report(format = nil)
+        instance = get_resources
+        contents = {
+          title: 'EC2',
+          resources: [
+            {
+               subtitle: '',
+               header: ['Name', 'Instance ID', 'Instance Type',
+                        'Availability Zone', 'Private IP Address',
+                        'Public IP Address', 'State'],
+               resource: instance
+            }
+          ]
+        }
+        Furikake::Formatter.shaping(format, contents)
       end
 
       def get_resources
-        elb = Aws::ElasticLoadBalancing::Client.new
-        elbs = []
-        elb.describe_load_balancers.load_balancer_descriptions.each do |lb|
-          elb = []
-          elb << lb.load_balancer_name
-          elb << lb.dns_name
-          elb << (lb.instances.map(&:to_h).map {|a| a[:instance_id] }).join(',')
-          elbs << elb
-        end
-        elbs
-      end
-
-      module_function :report, :get_resources
-    end
-  end
-end
+        ec2 = Aws::EC2::Client.new
+        params = {}
+        instances = []
+        loop do
+          res = ec2.describe_instances(params)
+...
 ```
 
-report メソッドには, リソースのヘッダ名を `headers` に配列で指定します. get_resources メソッドにドキュメント化したいリソースの一覧を取得する為の処理を追加します. 戻り値は, 以下のようなフォーマットになるように実装して下さい.
+report メソッドには, 一覧化する際のヘッダを `header` に配列で指定します. get_resources メソッドにドキュメント化したいリソースの一覧を取得する為の処理を追加します. 戻り値は, 以下のようなフォーマットになるように実装して下さい.
 
 ```
 [['ID', 'Name', 'Status'], ['ID', 'Name', 'Status'], ['ID', 'Name', 'Status']]

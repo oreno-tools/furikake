@@ -6,13 +6,13 @@ module Furikake
         contents = {
           title: 'EC2',
           resources: [
-              {
-                 subtitle: '',
-                 header: ['Name', 'Instance ID', 'Instance Type',
-                          'Availability Zone', 'Private IP Address',
-                          'Public IP Address', 'State'],
-                 resource: instance
-              }
+            {
+               subtitle: '',
+               header: ['Name', 'Instance ID', 'Instance Type',
+                        'Availability Zone', 'Private IP Address',
+                        'Public IP Address', 'State'],
+               resource: instance
+            }
           ]
         }
         Furikake::Formatter.shaping(format, contents)
