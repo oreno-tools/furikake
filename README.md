@@ -9,20 +9,31 @@
 
 ## Install
 
-とりあえずは, `git clone` してきて `bundle install` する感じでお願い致します.
+Add this line to your application's Gemfile:
 
-```sh
-$ git clone git@github.com:inokappa/furikake.git
-$ bundle install --path vendor/bundle
+```ruby
+gem 'furikake'
 ```
 
-## Usage
+And then execute:
 
-### Create Wiki Page
+```sh
+$ bundle
+```
+
+Or install it yourself as:
+
+```sh
+$ gem install awspec
+```
+
+## Getting Started
+
+### Step 1: Create Wiki Page
 
 * Backlog の wiki を作成し, wiki ID を控えておく (後の .furikake.yml で利用する)
 
-### Write .envrc
+### Step 2: Write .envrc
 
 とりあえずは, direnv と組み合わせて利用することを想定しており, AWS のクレデンシャル情報は .envrc に記載して下さい.
 
@@ -31,11 +42,30 @@ export AWS_PROFILE=your-profile
 export AWS_REGION=ap-northeast-1
 ```
 
-### Write .frikake.yml
+### Step 3: Generate && Modify .frikake.yml
 
-カレントディレクトリに, 以下のような内容で .furikake.yml を作成して下さい.
+If you're starting on a fresh furikake project, you can use furikake to generate your .furikake.yml:
+
+```sh
+bundle exec furikake setup
+```
+
+以下のように .furikake.yml が生成されるので, 環境に応じて必要な箇所を修正して下さい.
 
 ```yaml
+resources:
+  aws:
+    - clb
+    - vpc_endpoint
+    - security_group
+    - ec2
+    - kinesis
+    - lambda
+    - alb
+    - directory_service
+    - elasticsearch_service
+    - vpc
+    - rds
 backlog:
   projects:
     - space_id: 'your-backlog-space-id'
@@ -45,11 +75,19 @@ backlog:
       wiki_name: 'your-wiki-name'
       header: >
         # Test Header
+
+        [toc]
+
+        ## Sub Header
       footer: >
-        # Test Footer
+        ## Test Footer
+
+        ### Sub Footer
 ```
 
-### Run
+`resources` キー以下の属性値については, ドキュメント化する対象のリソースとなります.
+
+### Step 4: Run
 
 ```sh
 # ドキュメント化する情報を標準出力に出力する
