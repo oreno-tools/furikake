@@ -24,7 +24,7 @@ $ bundle
 Or install it yourself as:
 
 ```sh
-$ gem install awspec
+$ gem install furikake
 ```
 
 ## Getting Started
