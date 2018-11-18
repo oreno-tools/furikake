@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["inokappa"]
   spec.email         = ["inokara@gmail.com"]
 
-  spec.summary       = %q{}
-  spec.description   = %q{}
+  spec.summary       = %q{It is a command line tool to register your resources in Wiki page (Markdown format).}
+  spec.description   = %q{It is a command line tool to register your resources in Wiki page (Markdown format).}
   spec.homepage      = "https://github.com/inokappa/furikake"
   spec.license       = "MIT"
 
