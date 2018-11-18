@@ -18,5 +18,10 @@ module Furikake
       report = Furikake::Report.new
       report.publish
     end
+
+    desc 'setup', 'generate .furikake.yml template.'
+    def setup
+      Furikake::Setup.run
+    end
   end
 end
