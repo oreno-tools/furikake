@@ -1,34 +1,26 @@
 module Furikake
   module Resources
     module Rds
-      def report
+      def report(format = nil)
         instance, cluster = get_resources
-        headers = ['DB Cluster Name', 'DB Instance Name', 'DB Instance Class', 'DB Engine', 'DB Endpoint']
-        if instance.empty?
-          rds_info = 'N/A'
-        else
-          rds_info = MarkdownTables.make_table(headers, instance, is_rows: true, align: 'l')
-        end
-
-        headers = ['DB Cluster Name', 'Cluster Endpoint', 'Cluster Reader Endpoint', 'Cluster Members']
-        if cluster.empty?
-          cluster_info = 'N/A'
-        else
-          cluster_info = MarkdownTables.make_table(headers, cluster, is_rows: true, align: 'l')
-        end
-        documents = <<"EOS"
-### RDS
-
-#### Instances
-
-#{rds_info}
-
-#### Clusters
-
-#{cluster_info}
-EOS
-        
-        documents
+        contents = {
+          title: 'RDS',
+          resources: [
+              {
+                 subtitle: 'DB Instances',
+                 header: ['DB Cluster Name', 'DB Instance Name',
+                          'DB Instance Class', 'DB Engine', 'DB Endpoint'],
+                 resource: instance
+              },
+              {
+                 subtitle: 'DB Clusters',
+                 header: ['DB Cluster Name', 'Cluster Endpoint',
+                          'Cluster Reader Endpoint', 'Cluster Members'],
+                 resource: cluster
+              }
+          ]
+        }
+        Furikake::Formatter.shaping(format, contents).chomp
       end
 
       def get_resources

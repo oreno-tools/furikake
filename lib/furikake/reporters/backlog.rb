@@ -1,3 +1,5 @@
+require 'backlog_kit'
+
 module Furikake
   module Reporters
     class Backlog

@@ -1,3 +1,8 @@
+resources:
+  aws:
+    - ec2
+    - rds
+    - clb
 backlog:
   projects:
     - space_id: 'your-backlog-space-id'
@@ -7,5 +12,11 @@ backlog:
       wiki_name: 'your-wiki-name'
       header: >
         # Test Header
+
+        [toc]
+
+        ## Sub Header
       footer: >
-        # Test Footer
+        ## Test Footer
+
+        ### Sub Footer

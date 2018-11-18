@@ -1,21 +1,21 @@
 module Furikake
   module Resources
     module Ec2
-      def report
-        resources = get_resources
-        headers = ['Name', 'Instance ID', 'Instance Type', 'Availability Zone', 'Private IP Address', 'Public IP Address', 'State']
-        if resources.empty?
-          info = 'N/A'
-        else
-          info = MarkdownTables.make_table(headers, resources, is_rows: true, align: 'l')
-        end
-        documents = <<"EOS"
-### EC2
-
-#{info}
-EOS
-          
-        documents
+      def report(format = nil)
+        instance = get_resources
+        contents = {
+          title: 'EC2',
+          resources: [
+              {
+                 subtitle: '',
+                 header: ['Name', 'Instance ID', 'Instance Type',
+                          'Availability Zone', 'Private IP Address',
+                          'Public IP Address', 'State'],
+                 resource: instance
+              }
+          ]
+        }
+        Furikake::Formatter.shaping(format, contents)
       end
 
       def get_resources
