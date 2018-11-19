@@ -99,9 +99,38 @@ bundle exec furikake publish
 
 ## Tips
 
-### リソース追加
+### 検索対象リソース追加 (addons ディレクトリ)
 
-`lib/furikake/resources/` 以下に任意のファイル名でコードを追加することで, ドキュメント化する対象のリソースを追加することが出来ます.
+furikake コマンドを実行するカレントディレクトリに `addons` ディレクトリを作成し, 以下のようなコードを指定されたファイル名で作成することで, 検索対象リソースに追加することが可能です.
+
+```ruby
+module Furikake::Resources
+  module Addons
+    class Example
+      def self.report(format = nil)
+        values = [['value1', 'value2'], ['value3', 'value4']]
+        contents = {
+          title: 'Example',
+          resources: [
+            {
+               subtitle: '',
+               header: ['Title1', 'Title2'],
+               resource: values
+            }
+          ]
+        }
+        Furikake::Formatter.shaping(format, contents)
+      end
+    end
+  end
+end
+```
+
+このスクリプトを `addons/furikake-resource-addon-${downcase_class_name}.rb` というファイル名で保存する必要があります.
+
+### 検索対象リソース追加
+
+`lib/furikake/resources/` 以下に任意のファイル名でコードを追加することで, ドキュメント化する対象のリソースを追加することが可能です.
 
 ```ruby
 module Furikake
