@@ -10,9 +10,15 @@ module Furikake
           eval "documents.concat(Furikake::Resources::Addons::#{type_name.camelize}.report)"
           documents.concat("\n\n")
         else
-          require "furikake/resources/#{type}"
-          eval "documents.concat(Furikake::Resources::#{type.camelize}.report)"
-          documents.concat("\n\n")
+          begin
+            require "furikake/resources/#{type}"
+            eval "documents.concat(Furikake::Resources::#{type.camelize}.report)"
+            documents.concat("\n\n")
+          rescue LoadError
+            puts "リソースタイプ: #{type} を読み込めませんでした."
+          rescue
+            puts "リソースタイプ: #{type} の情報を取得出来ませんでした."
+          end
         end
       end
       documents
@@ -20,14 +26,44 @@ module Furikake
 
     def self.load_resource_type
       type = []
-      Dir.glob(File.dirname(__FILE__) + '/resources/*').each do |r|
-        type << File.basename(r, '.rb') unless r.include?('stub')
+      config_defined_resources = load_config_resource_type
+      default_resources = load_default_resource_type
+      if default_resources == config_defined_resources
+        type.push(default_resources)
+      else
+        type.push(config_defined_resources)
       end
+      type.push(load_addons_resource_type)
+      type.flatten
+    end
 
-      Dir.glob(Dir.pwd + '/addons/furikake-resource-addon-*').each do |r|
-        type << File.basename(r, '.rb')
+    def self.load_default_resource_type
+      default_resource_type = []
+      Dir.glob(File.dirname(__FILE__) + '/resources/*').each do |r|
+        default_resource_type << File.basename(r, '.rb') unless r.include?('stub')
       end
-      type
+      default_resource_type.sort
+    end
+
+    def self.load_addons_resource_type
+      addons_resource_type = []
+      Dir.glob(Dir.pwd + '/addons/furikake-resource-addon-*').each do |r|
+        addons_resource_type << File.basename(r, '.rb')
+      end
+      addons_resource_type.sort
+    end
+
+    def self.load_config_resource_type(path = nil)
+      path = '.furikake.yml' if path.nil?
+      begin
+        config = YAML.load_file(path)
+        config['resources']['aws'].sort
+      rescue Errno::ENOENT
+        puts '.furikake.yml が存在していません.'
+      rescue => ex
+        puts '.furikake.yml の読み込みに失敗しました. ' + ex.message
+        exit 1
+      end
     end
   end
 end
