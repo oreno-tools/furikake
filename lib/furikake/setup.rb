@@ -39,7 +39,6 @@ EOS
         f.write(erb.result(binding))
       end
       puts '[setup] .furikake.yml created.'
-      exit
     end
 
     def self.setup_addons
