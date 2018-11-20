@@ -9,7 +9,7 @@ module Furikake
     end
 
     def self.create_furikake_yaml
-      resource_type = Furikake::Resource.load_type
+      resource_type = Furikake::Resource.load_default_resource_type
       yaml_contents = <<"EOS"
 resources:
   aws:
