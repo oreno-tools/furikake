@@ -6,6 +6,7 @@
 * 利用している AWS リソースを Backlog の Wiki ページ (Markdown フォーマットのみ) に良しなに纏めてドキュメント化してくれるコマンドラインツールです
 * 簡単なコードを追加することで, 取得する AWS リソースを増やすことが出来るようにはしています
 * Backlog Wiki 以外にも登録出来るようにはしています
+* Docker で実行出来るようにもしました (https://github.com/inokappa/furikake-docker)
 
 ## Install
 
