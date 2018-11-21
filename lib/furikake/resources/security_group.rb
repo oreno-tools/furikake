@@ -106,8 +106,9 @@ EOS
       end
 
       def encode_value(value)
-          return value unless value.index('_') == 0 
-          '\\' + value
+        return ('\\' + value) if value == '-'
+        return ('\\' + value) if value.index('_') == 0
+        value
       end
 
       module_function :report, :get_resources,
