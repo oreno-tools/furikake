@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe 'Frikake::Report' do
-  before(:each) { @report = Furikake::Report.new }
+  before do
+    @report = Furikake::Report.new
+  end
 
   it 'check check_api_key (api_key in param)' do
     param = { 'api_key': 'xxxxx', 'foo': 'bar' }

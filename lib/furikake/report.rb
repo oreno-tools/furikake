@@ -4,9 +4,7 @@ module Furikake
   class Report
     include Furikake::Config
 
-    def initialize
-      @resource = Furikake::Resource.generate
-    end
+    def initialize; end
 
     def show
       params = read_furikake_yaml
@@ -32,9 +30,10 @@ module Furikake
     private
 
     def generate(header, footer)
+      resource = Furikake::Resource.generate
       documents = <<"EOS"
 #{header}
-#{@resource}
+#{resource}
 #{footer}
 EOS
       documents
