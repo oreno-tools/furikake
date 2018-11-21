@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    furikake (0.0.6)
+    furikake (0.0.7)
       aws-sdk
       backlog_kit
       markdown-tables
