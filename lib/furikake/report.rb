@@ -5,13 +5,12 @@ module Furikake
     include Furikake::Config
 
     def initialize
-      @params = read_furikake_yaml
       @resource = Furikake::Resource.generate
     end
 
     def show
-      @params = read_furikake_yaml
-      @params['backlog']['projects'].each do |p|
+      params = read_furikake_yaml
+      params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         puts generate(header, footer)
@@ -19,7 +18,8 @@ module Furikake
     end
 
     def publish
-      @params['backlog']['projects'].each do |p|
+      params = read_furikake_yaml
+      params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         document = generate(header, footer)
