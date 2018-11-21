@@ -4,13 +4,11 @@ module Furikake
   class Report
     include Furikake::Config
 
-    def initialize
-      @params = read_furikake_yaml
-      @resource = Furikake::Resource.generate
-    end
+    def initialize; end
 
     def show
-      @params['backlog']['projects'].each do |p|
+      params = read_furikake_yaml
+      params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         puts generate(header, footer)
@@ -18,24 +16,38 @@ module Furikake
     end
 
     def publish
-      @params['backlog']['projects'].each do |p|
+      params = read_furikake_yaml
+      params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         document = generate(header, footer)
         p['wiki_contents'] = document
-        Furikake::Reporters::Backlog.new(p).publish
+        param = check_api_key(p)
+        Furikake::Reporters::Backlog.new(param).publish
       end
     end
 
     private
 
     def generate(header, footer)
+      resource = Furikake::Resource.generate
       documents = <<"EOS"
 #{header}
-#{@resource}
+#{resource}
 #{footer}
 EOS
       documents
+    end
+
+    def check_api_key(param)
+      if !param.has_key?(:api_key) or !param['api_key'].nil?
+        if !ENV['BACKLOG_API_KEY'].nil? or !ENV['BACKLOG_API_KEY'] == ''
+          param['api_key'] = ENV['BACKLOG_API_KEY'] 
+          return param
+        end
+        raise 'API キーを読み込むことが出来ませんでした.'
+      end
+      param
     end
 
     def insert_published_by(header)
