@@ -16,3 +16,4 @@
 vendor/
 .DS_Store
 test.*
+spec/tmp/furikake.yml.test

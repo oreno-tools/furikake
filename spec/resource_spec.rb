@@ -7,9 +7,9 @@ describe 'Frikake::Resource' do
     allow(Furikake::Resource).to receive(:load_addons_resource_type).and_return(['test4', 'test5'])
   end
 
-  after do
-    File.delete('spec/tmp/furikake.yml.test')
-  end
+  # after do
+  #   File.delete('spec/tmp/furikake.yml.test')
+  # end
 
   it 'check load_resource_type' do
     actual = Furikake::Resource.load_resource_type

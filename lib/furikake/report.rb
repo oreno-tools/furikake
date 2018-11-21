@@ -10,6 +10,7 @@ module Furikake
     end
 
     def show
+      @params = read_furikake_yaml
       @params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
@@ -23,7 +24,8 @@ module Furikake
         footer = p['footer']
         document = generate(header, footer)
         p['wiki_contents'] = document
-        Furikake::Reporters::Backlog.new(p).publish
+        param = check_api_key(p)
+        Furikake::Reporters::Backlog.new(param).publish
       end
     end
 
@@ -36,6 +38,17 @@ module Furikake
 #{footer}
 EOS
       documents
+    end
+
+    def check_api_key(param)
+      if !param.has_key?(:api_key) or !param['api_key'].nil?
+        if !ENV['BACKLOG_API_KEY'].nil? or !ENV['BACKLOG_API_KEY'] == ''
+          param['api_key'] = ENV['BACKLOG_API_KEY'] 
+          return param
+        end
+        raise 'API キーを読み込むことが出来ませんでした.'
+      end
+      param
     end
 
     def insert_published_by(header)
