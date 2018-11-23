@@ -6,6 +6,7 @@ module Furikake
     def initialize(options)
       @logger = Logger.new(STDOUT)
       @flag_int = false
+      @detach = options[:detach]
       @pid_file = options[:pid]
       @interval = options[:interval]
     end
@@ -28,7 +29,7 @@ module Furikake
 
     def daemonize
       begin
-        Process.daemon(true, true)
+        Process.daemon(true, true) if @detach
         open(@pid_file, 'w') { |f| f << Process.pid }
       rescue => e
         @logger.error "monitor のデーモン化に失敗しました. #{e}"
