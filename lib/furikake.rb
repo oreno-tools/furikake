@@ -9,6 +9,7 @@ require 'furikake/resource'
 require 'furikake/report'
 require 'furikake/setup'
 require 'furikake/version'
+require 'furikake/monitor'
 
 module Furikake
 end

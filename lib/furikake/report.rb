@@ -27,6 +27,10 @@ module Furikake
       end
     end
 
+    # def monitor_test
+    #   show
+    # end
+
     private
 
     def generate(header, footer)
@@ -40,7 +44,7 @@ EOS
     end
 
     def check_api_key(param)
-      if !param.has_key?(:api_key) or !param['api_key'].nil?
+      if !param.has_key?('api_key') or param['api_key'].nil?
         if !ENV['BACKLOG_API_KEY'].nil? or !ENV['BACKLOG_API_KEY'] == ''
           param['api_key'] = ENV['BACKLOG_API_KEY'] 
           return param
