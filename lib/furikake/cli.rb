@@ -20,6 +20,7 @@ module Furikake
     end
 
     desc 'monitor', 'resouces publish to something by daemonize process.'
+    option :detach, type: :boolean, aliases: '-d', default: false, desc: 'detach monitor process.'
     option :interval, type: :numeric, aliases: '-i', default: 3600, desc: 'specify monitor interval (sec).'
     option :pid, type: :string, aliases: '-p', default: 'furikake.pid', desc: 'specify PID file path (Default: furikake.pid)'
     def monitor
