@@ -48,10 +48,15 @@ module Furikake
     end
 
     def monitor
+      i = 0
       while true
+        if @interval == i
+          publish
+          i = 0
+        end
+        i += 1
         break if @flag_int
-        publish
-        sleep @interval
+        sleep 1
       end
     end
   end
