@@ -1,5 +1,4 @@
 # Reference: https://www.mk-mode.com/octopress/2013/10/06/ruby-daemonize-script/
-require 'logger'
 
 module Furikake
   class Monitor < Report
@@ -13,11 +12,11 @@ module Furikake
 
     def run
       begin
-        @logger.info 'furikake monitor starting.'
+        @logger.info 'furikake monitor を起動します.'
         daemonize
         set_trap
         monitor
-        @logger.warn "furikake monitor stopped."
+        @logger.warn "furikake monitor を停止しました."
         File.delete(@pid_file) if File.file?(@pid_file)
       rescue => e
         @logger.error "monitor の起動に失敗しました. #{e}"

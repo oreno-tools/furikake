@@ -1,5 +1,6 @@
 require 'thor'
 require 'yaml'
+require 'logger'
 require 'aws-sdk'
 
 require 'furikake/cli'
