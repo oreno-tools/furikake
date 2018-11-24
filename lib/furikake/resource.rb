@@ -8,16 +8,18 @@ module Furikake
           require "#{type}"
           type_name = type.split('-')[-1]
           eval "documents.concat(Furikake::Resources::Addons::#{type_name.camelize}.report)"
+          logger.info("リソースタイプ: #{type_name} の情報を取得しました.")
           documents.concat("\n\n")
         else
           begin
             require "furikake/resources/#{type}"
             eval "documents.concat(Furikake::Resources::#{type.camelize}.report)"
+            logger.info("リソースタイプ: #{type} の情報を取得しました.")
             documents.concat("\n\n")
           rescue LoadError
-            puts "リソースタイプ: #{type} を読み込めませんでした."
+            logger.warn("リソースタイプ: #{type} を読み込めませんでした.")
           rescue
-            puts "リソースタイプ: #{type} の情報を取得出来ませんでした."
+            logger.warn("リソースタイプ: #{type} の情報を取得出来ませんでした.")
           end
         end
       end
@@ -59,11 +61,16 @@ module Furikake
         config = YAML.load_file(path)
         config['resources']['aws'].sort
       rescue Errno::ENOENT
-        puts '.furikake.yml が存在していません.'
+        logger.error('.furikake.yml が存在していません.')
+        exit 1
       rescue => ex
-        puts '.furikake.yml の読み込みに失敗しました. ' + ex.message
+        logger.error('.furikake.yml の読み込みに失敗しました. ' + ex.message)
         exit 1
       end
+    end
+
+    def self.logger
+      Logger.new(STDOUT)
     end
   end
 end

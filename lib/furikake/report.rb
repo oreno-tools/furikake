@@ -4,7 +4,9 @@ module Furikake
   class Report
     include Furikake::Config
 
-    def initialize; end
+    def initialize
+      @logger = Logger.new(STDOUT)
+    end
 
     def show
       params = read_furikake_yaml
@@ -24,6 +26,7 @@ module Furikake
         p['wiki_contents'] = document
         param = check_api_key(p)
         Furikake::Reporters::Backlog.new(param).publish
+        @logger.info("#{param['space_id']} の #{param['wiki_id']} に情報を投稿しました.")
       end
     end
 
