@@ -3,7 +3,8 @@
 module Furikake
   class Monitor < Report
     def initialize(options)
-      @logger = Logger.new(STDOUT)
+      $stdout.sync = true
+      @logger = Logger.new($stdout)
       @flag_int = false
       @detach = options[:detach]
       @pid_file = options[:pid]

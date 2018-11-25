@@ -70,7 +70,8 @@ module Furikake
     end
 
     def self.logger
-      Logger.new(STDOUT)
+      $stdout.sync = true
+      Logger.new($stdout)
     end
   end
 end

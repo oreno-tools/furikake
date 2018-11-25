@@ -5,7 +5,8 @@ module Furikake
     include Furikake::Config
 
     def initialize
-      @logger = Logger.new(STDOUT)
+      $stdout.sync = true
+      @logger = Logger.new($stdout)
     end
 
     def show
