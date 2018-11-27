@@ -43,6 +43,12 @@ export AWS_PROFILE=your-profile
 export AWS_REGION=ap-northeast-1
 ```
 
+BACKLOG_API キーについても環境変数に指定することも可能です.
+
+```sh
+export BACKLOG_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
 ### Step 3: Generate && Modify .frikake.yml
 
 If you're starting on a fresh furikake project, you can use furikake to generate your .furikake.yml:
@@ -96,6 +102,18 @@ bundle exec furikake show
 
 # ドキュメント化する情報を wiki に登録する
 bundle exec furikake publish
+```
+
+### Step x: Monitor
+
+`monitor` コマンドを利用することで, `publish` コマンドを常駐化することが可能です.
+
+```sh
+# 1 時間毎に対象をチェックして wiki に登録する
+bundle exec furikake monitor
+
+# 10 分毎に対象をチェックして wiki に登録する
+bundle exec furikake monitor --interval=600
 ```
 
 ## Tips
