@@ -12,7 +12,7 @@ describe 'Frikake::Resource' do
   # end
 
   it 'check load_resource_type' do
-    actual = Furikake::Resource.load_resource_type
+    actual = Furikake::Resource.load_resource_type(true, {})
     expect = ['test1', 'test2', 'test3', 'test4', 'test5']
     expect(expect).to eq(actual)
   end

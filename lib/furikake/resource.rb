@@ -1,8 +1,8 @@
 module Furikake
   class Resource
-    def self.generate
+    def self.generate(cli, resources)
       documents = ''
-      load_resource_type.each do |type|
+      load_resource_type(cli, resources).each do |type|
         if type.include?('addon')
           $LOAD_PATH.push(Dir.pwd + '/addons')
           require "#{type}"
@@ -26,9 +26,9 @@ module Furikake
       documents
     end
 
-    def self.load_resource_type
+    def self.load_resource_type(cli, resources)
       type = []
-      config_defined_resources = load_config_resource_type
+      config_defined_resources = cli ? load_config_resource_type : resources['aws'].sort
       default_resources = load_default_resource_type
       if default_resources == config_defined_resources
         type.push(default_resources)
