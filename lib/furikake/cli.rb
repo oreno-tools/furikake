@@ -9,13 +9,13 @@ module Furikake
 
     desc 'show', 'resouces print.'
     def show
-      report = Furikake::Report.new
+      report = Furikake::Report.new(true)
       report.show
     end
 
     desc 'publish', 'resouces publish to something. (Default: Backlog)'
     def publish
-      report = Furikake::Report.new
+      report = Furikake::Report.new(true)
       report.publish
     end
 

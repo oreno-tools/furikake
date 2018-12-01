@@ -4,14 +4,15 @@ module Furikake
   class Report
     include Furikake::Config
 
-    def initialize
+    def initialize(cli, params = nil)
       $stdout.sync = true
       @logger = Logger.new($stdout)
+      @params = cli ? read_furikake_yaml : params
+      raise ArgumentError, 'パラメータが設定されていません.' if @params.nil?
     end
 
     def show
-      params = read_furikake_yaml
-      params['backlog']['projects'].each do |p|
+      @params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         puts generate(header, footer)
@@ -19,8 +20,7 @@ module Furikake
     end
 
     def publish
-      params = read_furikake_yaml
-      params['backlog']['projects'].each do |p|
+      @params['backlog']['projects'].each do |p|
         header = insert_published_by(p['header'])
         footer = p['footer']
         document = generate(header, footer)
@@ -30,10 +30,6 @@ module Furikake
         @logger.info("#{param['space_id']} の #{param['wiki_id']} に情報を投稿しました.")
       end
     end
-
-    # def monitor_test
-    #   show
-    # end
 
     private
 
