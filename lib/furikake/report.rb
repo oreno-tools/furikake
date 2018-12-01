@@ -7,7 +7,8 @@ module Furikake
     def initialize(cli, params = nil)
       $stdout.sync = true
       @logger = Logger.new($stdout)
-      @params = cli ? read_furikake_yaml : params
+      @cli = cli
+      @params = @cli ? read_furikake_yaml : params
       raise ArgumentError, 'パラメータが設定されていません.' if @params.nil?
     end
 
@@ -34,7 +35,7 @@ module Furikake
     private
 
     def generate(header, footer)
-      resource = Furikake::Resource.generate
+      resource = Furikake::Resource.generate(@cli, @params['resources'])
       documents = <<"EOS"
 #{header}
 #{resource}
