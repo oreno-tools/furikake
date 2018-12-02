@@ -6,3 +6,7 @@ rvm:
   - 2.3.5
   - 2.2.8
 before_install: gem install bundler -v 1.16.2
+before_script:
+  - mv .furikake.sample.yml .furikake.yml
+after_script:
+  - rm .furikake.yml
