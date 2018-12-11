@@ -29,7 +29,7 @@ module Furikake
         rds_infos = []
         rds.describe_db_instances.db_instances.map(&:to_h).each do |i|
           instance = []
-          instance << i[:db_cluster_identifier]
+          instance << (!i[:db_cluster_identifier].nil? ? i[:db_cluster_identifier] : 'N/A')
           instance << i[:db_instance_identifier]
           instance << i[:db_instance_class]
           instance << i[:engine]

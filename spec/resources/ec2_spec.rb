@@ -1,9 +1,11 @@
 require 'spec_helper'
 require "furikake/resources/ec2"
 
-Furikake::Resources::Stub.load 'ec2'
-
 describe 'Furikake::Resources::Ec2' do
+  before :all do
+    Furikake::Resources::Stub.load 'ec2'
+  end
+
   it 'have markdown resource list' do
     expect = <<"EOS"
 ### EC2
