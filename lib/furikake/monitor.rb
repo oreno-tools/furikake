@@ -3,6 +3,7 @@
 module Furikake
   class Monitor < Report
     def initialize(options)
+      super(true)
       $stdout.sync = true
       @logger = Logger.new($stdout)
       @flag_int = false
