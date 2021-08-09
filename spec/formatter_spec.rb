@@ -15,10 +15,10 @@ describe 'Frikake::Formatter' do
     expect = <<"EOS"
 ### xxxxxxxxxxxxxxxx
 
-test1|test2
-:-|:-
-1|2
-1|2
+|test1|test2|
+|:-|:-|
+|1|2|
+|1|2|
 EOS
     actual = Furikake::Formatter.shaping(nil, contents)
     expect(expect).to eq(actual)
@@ -45,17 +45,17 @@ EOS
 
 #### foo
 
-test1|test2
-:-|:-
-1|2
-1|2
+|test1|test2|
+|:-|:-|
+|1|2|
+|1|2|
 
 #### bar
 
-test10|test20
-:-|:-
-1|2
-1|2
+|test10|test20|
+|:-|:-|
+|1|2|
+|1|2|
 EOS
     actual = Furikake::Formatter.shaping(nil, contents)
     expect(expect).to eq(actual)
