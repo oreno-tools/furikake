@@ -10,9 +10,9 @@ describe 'Furikake::Resources::Ec2' do
     expect = <<"EOS"
 ### EC2
 
-Name|Instance ID|Instance Type|Availability Zone|Private IP Address|Public IP Address|State
-:-|:-|:-|:-|:-|:-|:-
-my-ec2|i-ec12345a|t2.small|ap-northeast-1a|10.0.1.1|123.0.456.789|running
+|Name|Instance ID|Instance Type|Availability Zone|Private IP Address|Public IP Address|State|
+|:-|:-|:-|:-|:-|:-|:-|
+|my-ec2|i-ec12345a|t2.small|ap-northeast-1a|10.0.1.1|123.0.456.789|running|
 EOS
     actual = Furikake::Resources::Ec2.report(nil)
     expect(expect).to eq(actual)
