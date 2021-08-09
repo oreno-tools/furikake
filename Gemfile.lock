@@ -1003,11 +1003,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (>= 2.2.10)
   furikake!
   octorelease
   rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
-   1.16.2
+   2.2.25
