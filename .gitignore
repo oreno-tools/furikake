@@ -19,3 +19,5 @@ test.*
 spec/tmp/furikake.yml.test
 furikake.pid
 .ruby-version
+
+Gemfile.lock
