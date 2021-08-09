@@ -1,4 +1,4 @@
-# Furikake [![Build Status](https://travis-ci.org/inokappa/furikake.svg?branch=master)](https://travis-ci.org/inokappa/furikake) [![Gem Version](https://badge.fury.io/rb/furikake.svg)](https://badge.fury.io/rb/furikake)
+# Furikake [![CI](https://github.com/oreno-tools/furikake/actions/workflows/ci.yml/badge.svg)](https://github.com/oreno-tools/furikake/actions) [![Gem Version](https://badge.fury.io/rb/furikake.svg)](https://badge.fury.io/rb/furikake)
 ![](https://raw.githubusercontent.com/inokappa/furikake/master/docs/images/furikake.png)
 
 ## これなに
