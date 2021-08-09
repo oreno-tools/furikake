@@ -30,4 +30,6 @@ jobs:
         bundler-cache: true
 
     - name: Run tests
-      run: bundle exec rake spec
+      run: |
+        mv .furikake.sample.yml .furikake.yml
+        bundle exec rake spec
