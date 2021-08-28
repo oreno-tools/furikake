@@ -9,7 +9,7 @@ describe 'Furikake::Resources::SecurityGroup' do
   end
 
   it 'check encode_value (has `dash` pattern)' do
-    expect = '\\-'
+    expect = '-'
     actual = Furikake::Resources::SecurityGroup.encode_value('-')
     expect(expect).to eq(actual)
   end
