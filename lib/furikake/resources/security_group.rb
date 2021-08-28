@@ -4,11 +4,11 @@ module Furikake
       def report
         ingresses, egresses = get_resources
         headers = ['ID', 'Group Name', 'Description',
-                   'Port', 'Protocol', 'Source' ]
+                   'From Port', 'To Port', 'Protocol', 'Source' ]
         ingress_info = MarkdownTables.make_table(headers, ingresses, is_rows: true, align: 'l')
 
         headers = ['ID', 'Group Name', 'Description',
-                   'Port', 'Protocol', 'Destination' ]
+                   'From Port', 'To Port', 'Protocol', 'Source' ]
         egress_info = MarkdownTables.make_table(headers, egresses, is_rows: true, align: 'l')
 
         documents = <<"EOS"
@@ -40,6 +40,7 @@ EOS
               ingress << encode_value(sg.group_name)
               ingress << encode_value(sg.description || 'N/A')
               ingress << (permission.from_port || 'N/A')
+              ingress << (permission.to_port || 'N/A')
               ingress << (permission.ip_protocol == '-1' ? 'ALL' : permission.ip_protocol)
  
               ip_ranges = list_ip_ranges(permission.ip_ranges)
@@ -50,7 +51,7 @@ EOS
               source << ip_ranges unless ip_ranges.empty?
               source << list_ids unless list_ids.empty?
               source << group_pairs unless group_pairs.empty?
-              ingress << source.join(', ')
+              ingress << source.join(' <br> ')
               ingresses << ingress
             end
  
@@ -60,6 +61,7 @@ EOS
               egress << encode_value(sg.group_name)
               egress << encode_value(sg.description || 'N/A')
               egress << (permission.from_port || 'N/A')
+              egress << (permission.to_port || 'N/A')
               egress << (permission.ip_protocol == '-1' ? 'ALL' : permission.ip_protocol)
 
               ip_ranges = list_ip_ranges(permission.ip_ranges)
@@ -70,7 +72,7 @@ EOS
               dest << ip_ranges unless ip_ranges.empty?
               dest << list_ids unless list_ids.empty?
               dest << group_pairs unless group_pairs.empty?
-              egress << dest.join(', ')
+              egress << dest.join('<br>')
               egresses << egress
             end
           end
@@ -106,9 +108,8 @@ EOS
       end
 
       def encode_value(value)
-        return ('\\' + value) if value == '-'
-        return ('\\' + value) if value.index('_') == 0
-        value
+          return value unless value.index('_') == 0
+          '\\' + value
       end
 
       module_function :report, :get_resources,
